@@ -92,3 +92,64 @@ print(message) // "Hello, Swift!"
 // name: String: クロージャの引数。
 // -> String: 戻り値の型。
 // "Hello, \(name)!": 処理内容（戻り値）。
+
+
+// 20250126
+// ■配列や辞書の作成
+// 角括弧([])を使い、それらの要素へアクセスする際は角括弧内にインデックスやキーを書きます。
+// 最後の要素の後ろにもカンマ(,)を付けることができます。
+var shoppingList = ["catfish", "water", "tulips"]
+shoppingList[1] = "bottle of water"
+
+var occupations = [
+    "Malcom": "Captain",
+    "Kaylee": "Mechanic",
+]
+occupations["Jayne"] = "Public Relations"
+
+// test ok!
+print(shoppingList)
+print(occupations)
+
+// 配列は要素を追加すると自動でサイズが大きくなります。
+shoppingList.append("blue paint")
+print(shoppingList)
+
+// 括弧を使用して、空の配列または辞書を記述します。配列の場合は []、辞書の場合は [:] と書きます。
+
+// ここでエラーになったので注意
+// 配列の場合、事前に型の指定が必要
+// 配列の要素型を指定して、後で空の配列を代入する
+var fruits: [String]
+fruits = []
+occupations = [:]
+
+// 空の配列または辞書を新しい変数
+// または型情報がない別の場所に割り当てる場合は、型を指定する必要があります。
+let emptyArray: [String] = []
+let emptyDictionary: [String: Float] = [:]
+
+
+
+// ■制御フロー（Control Flow）
+// 条件分岐を作成するには、if と switch を使います。
+// ループを作成するには for-in while repeat-whileを使います。
+// 条件やループ変数やオプショナルに丸括弧(())を付けるかどうかは任意です。
+// 本文の周りの中括弧({})は必須です。
+
+// 例：このコードは、配列 individualScores に含まれる個々のスコアをループでチェックし、
+// 条件に応じて teamScore に点数を加算しています。
+let individualScores = [75, 43, 103, 87, 12]
+var teamScore = 0
+for score in individualScores {
+    if score > 50 {
+        teamScore += 3
+    } else {
+        teamScore += 1
+    }
+}
+print(teamScore)
+// 11
+
+
+
