@@ -160,7 +160,7 @@ print(teamScore)
 
 
 // 2025/01/28 Kazutoshi Nagahashi
-/*　？なぜエラーになるのか質問した方がいいかも？
+/*　おそらくSwiftのバージョン違いによるエラー
 let scoreDecoration = if teamScore > 10 {
     "🎉"
 } else {
@@ -169,6 +169,11 @@ let scoreDecoration = if teamScore > 10 {
 print("Score:", teamScore, scoreDecoration)
 // "Score: 11 🎉"を出力
 */
+
+// 修正コード（三項演算子を使用）
+let scoreDecoration = teamScore > 10 ? "🎉" : ""
+print("Score:", teamScore, scoreDecoration)
+
 
 var optionalString: String? = "Hello"
 print(optionalString == nil)
@@ -190,17 +195,17 @@ let fullName: String = "John Appleseed"
 let informalGreeting = "Hi \(nickName ?? fullName)"
 
 // アンラップ後の変数に同名を用いる場合、右辺を省略することができます。
-// ？なぜifと変数の間にletが入るの？
+// オプショナルバインディング（if letで値がある場合だけ処理を行う）
+// if letで値がある場合だけ処理を行う
 if let nickName {
     print("Hey, \(nickName)")
 }
 
 // switchは、あらゆる種類のデータと比較のための演算子を扱うことができます。
 // (整数や等価チェックだけに限定されません)
-// ？まずswitch-case文の基本を教えてくれよ？
-// ↓何やってんだよ？
-// case let x where x.hasSuffix("pepper"):
-// print("Is it a spicy \(x)?")
+// case let x where 条件
+// caseに条件をつけることができる（「where句付きのパターンマッチ」）。
+// hasSuffix("pepper")は、文字列の末尾が"pepper"かどうかを判定するメソッド
 let vegetable = "red pepper"
 switch vegetable {
 case "celery":
@@ -218,7 +223,12 @@ default:
 
 // for-in を使用することで辞書のそれぞれの要素のキーバリューペアを受け取って、辞書内のアイテムに反復処理をすることができます。
 // 辞書は順序のないコレクションなので、受け取るキーバリューペアの順序は決まっていません。
-// ？何だよこのコード、詳細解説よろしく？
+// このコードは、辞書（Dictionary）を使ってカテゴリごとの数値リストを管理し、
+// それらの中から最大の数値を見つける処理を行っている
+// ✅ 辞書を使ってカテゴリーごとに数値のリストを管理
+// ✅ 二重ループでリストのすべての数値を走査
+// ✅ largest に最大値を保存しながら更新していく
+// ✅ 最終的に最大値を出力
 let interestingNumbers = [
     "Prime": [2, 3, 5, 7, 11, 13],
     "Fibonacci": [1, 1, 2, 3, 5, 8],
@@ -237,8 +247,8 @@ print(largest)
 
 // while を使用することで、条件が変わるまでブロック内のコードを反復して実行できます。
 // ループの条件を最後に置くことで、ループ内のブロックが少なくとも 1 回実行されるようにすることができます。
-// ？repeatって何やねん？
-// ？コードについて教えて？
+// repeat は 「少なくとも1回は必ず実行される while ループ」 のこと。
+// 普通の while ループとは 実行の順番 が違うのがポイント。
 var n = 2
 while n < 100 {
     n *= 2
