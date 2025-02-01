@@ -37,7 +37,7 @@ var greeting = "Hello, playground"
 print("Hello World!")
 print("My Name Kazutoshi!")
 
-// シンプルな値(Simple Values)
+// ■シンプルな値(Simple Values)
 var myVariable = 42
 myVariable = 50
 let myConstant = 42
@@ -270,3 +270,49 @@ for i in 0..<4 {
 }
 print(total)
 // 6
+
+
+
+// 2025/02/01
+// ■関数とクロージャ(Functions and Closures)
+// 関数の定義には func を使います。括弧(())の中に引数のリスト、その前に関数の名前を付けることで関数を呼び出します。
+// また、-> の後ろに戻り値の型を指定して、パラメータ名や型と区別します。
+
+// このコードは、数値の配列 (scores) から最小値 (min)、最大値 (max)、合計 (sum) を
+// 計算する関数 calculateStatistics を定義し、呼び出して結果を出力しています。
+
+// 戻り値 (-> (min: Int, max: Int, sum: Int))タプル (min, max, sum) を返す
+// 各要素に 名前 (min, max, sum) が付いているので、後で名前でアクセスできる
+func greet(person: String, day: String) -> String {
+    return "Hello \(person), today is \(day)."
+}
+greet(person: "Bob", day: "Tuesday")
+
+
+func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
+    // min と max を配列の最初の要素 (scores[0]) に設定
+    // これにより、配列が空でない限り比較が正しく動作する
+    // sum = 0 にしておく（後で合計を計算する）
+    var min = scores[0]
+    var max = scores[0]
+    var sum = 0
+    
+    // 配列 scores を順番にチェックß
+    for score in scores {
+        // score > max → max を更新
+        // score < min → min を更新
+        // 合計 sum に score を加算
+        if score > max {
+            max = score
+        } else if score < min {
+            min = score
+        }
+        sum += score
+    }
+    return (min, max, sum)
+}
+let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
+print(statistics.sum)
+// 120
+print(statistics.2)
+// 120
