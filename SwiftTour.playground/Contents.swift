@@ -289,6 +289,7 @@ func greet(person: String, day: String) -> String {
 greet(person: "Bob", day: "Tuesday")
 
 
+/*
 func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
     // min と max を配列の最初の要素 (scores[0]) に設定
     // これにより、配列が空でない限り比較が正しく動作する
@@ -316,3 +317,45 @@ print(statistics.sum)
 // 120
 print(statistics.2)
 // 120
+*/
+
+
+// 2025/02/02
+// 関数はネストすることができます。ネストした関数は、外側の関数で定義された変数にアクセスすることができます。
+// ネストした関数を使用することで、長くて複雑な関数を整理することができます。
+func returnFifteen() -> Int {
+    var y = 10
+    func add() {
+        y += 5
+    }
+    add()
+    return y
+}
+returnFifteen()
+// 15
+
+// 関数は第一級オブジェクトです。つまり、関数は値として他の関数を戻り値にすることができます。
+func makeIncrementer() -> ((Int) -> Int) {
+    func addOne(number: Int) -> Int {
+        return 1 + number
+    }
+    return addOne
+}
+var increment = makeIncrementer()
+increment(7)
+
+
+// 引数に他の関数を受け取ることもできます。
+func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
+    for item in list {
+        if condition(item) {
+            return true
+        }
+    }
+    return false
+}
+func lessThanTen(number: Int) -> Bool {
+    return number < 10
+}
+var numbers = [20, 19, 7, 12]
+hasAnyMatches(list: numbers, condition: lessThanTen)
