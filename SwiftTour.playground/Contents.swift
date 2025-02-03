@@ -357,5 +357,47 @@ func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
 func lessThanTen(number: Int) -> Bool {
     return number < 10
 }
+// var numbers = [20, 19, 7, 12]
+// hasAnyMatches(list: numbers, condition: lessThanTen)
+
+
+// 2025/02/03
+// 関数はクロージャの特殊なケースです。
+// クロージャは、後で実行される可能性があるコードブロックのことを指します。
+// クロージャ内のコードは、そのクロージャが作成されたスコープで利用可能な変数や関数へアクセスすることができます。
+// これは、実際に実行されるのが別のスコープ(タイミング)の場合でも当てはまります。
+// 上記のネストした関数の例でも同じことが見られます。
+// 中括弧({})で囲むことで、名前なしのクロージャを作成することもできます。
+// in を使用することで、コードの本文から引数と戻り値を分離することができます。
+
+// map は、配列の各要素に対して同じ処理を実行し、その結果から新しい配列を生成する関数です。
+// var numbers = [20, 19, 7, 12]
+
+numbers.map({ (number: Int) -> Int in
+    let result = 3 * number
+    return result
+})
+
+// より簡潔にクロージャを書く複数の方法があります。
+// クロージャの型が既にわかっている場合(デリゲートのコールバックなど)、
+// パラメータと戻り値の型を省略できます。
+// 単一の文のみのクロージャの場合、その文の値が戻り値として暗黙的に返されます。
+
+// { number in 3 * number } はクロージャ（無名関数）の記述です。
+// var numbers = [20, 19, 7, 12]
+
+let mappedNumbers = numbers.map({ number in 3 * number })
+print(mappedNumbers)
+// [60, 57, 21, 36]
+
+// 番号でパラメータを参照できます。
+// このアプローチは、非常に短いクロージャで特に役立ちます。
+// 関数の最後の引数として渡されたクロージャは、丸括弧の直後に記述できます。
+// クロージャが関数の唯一の引数の場合は、丸括弧を完全に省略できます。
+
+// クロージャ { $0 > $1 }
 var numbers = [20, 19, 7, 12]
-hasAnyMatches(list: numbers, condition: lessThanTen)
+
+let sortedNumbers = numbers.sorted { $0 > $1 }
+print(sortedNumbers)
+// [20, 19, 12, 7]
