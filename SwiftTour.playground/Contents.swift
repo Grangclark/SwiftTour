@@ -373,11 +373,13 @@ func lessThanTen(number: Int) -> Bool {
 // map は、配列の各要素に対して同じ処理を実行し、その結果から新しい配列を生成する関数です。
 // var numbers = [20, 19, 7, 12]
 
+/*
 numbers.map({ (number: Int) -> Int in
     let result = 3 * number
     return result
 })
-
+*/
+ 
 // より簡潔にクロージャを書く複数の方法があります。
 // クロージャの型が既にわかっている場合(デリゲートのコールバックなど)、
 // パラメータと戻り値の型を省略できます。
@@ -386,10 +388,12 @@ numbers.map({ (number: Int) -> Int in
 // { number in 3 * number } はクロージャ（無名関数）の記述です。
 // var numbers = [20, 19, 7, 12]
 
+/*
 let mappedNumbers = numbers.map({ number in 3 * number })
 print(mappedNumbers)
 // [60, 57, 21, 36]
-
+*/
+ 
 // 番号でパラメータを参照できます。
 // このアプローチは、非常に短いクロージャで特に役立ちます。
 // 関数の最後の引数として渡されたクロージャは、丸括弧の直後に記述できます。
@@ -401,3 +405,56 @@ var numbers = [20, 19, 7, 12]
 let sortedNumbers = numbers.sorted { $0 > $1 }
 print(sortedNumbers)
 // [20, 19, 12, 7]
+
+
+
+// 2025/02/04
+// 下記はSwiftTourにしては分かりやすい
+// ■オブジェクトととクラス(Objects and Classes)
+class Shape {
+    var numberOfSides = 0
+    func simpleDescription() -> String {
+        return "A shape with \(numberOfSides) sides."
+    }
+}
+
+var shape = Shape()
+shape.numberOfSides = 7
+var shapeDescription = shape.simpleDescription()
+
+// このバージョンのShapeクラスは重要なことが抜けています。
+// それは、インスタンスを生成するときにクラスを構築するためのイニシャライザです。
+// init を使ってイニシャライザを作成します。
+class NamedShape {
+    var numberOfSides: Int = 0
+    var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    func simpleDescription() -> String {
+        return "A shape with \(numberOfSides) sides."
+    }
+}
+
+class Square: NamedShape {
+    var sideLength: Double
+    
+    init(sideLength: Double, name: String) {
+        self.sideLength = sideLength
+        super.init(name: name)
+        numberOfSides = 4
+    }
+    
+    func area() -> Double {
+        return sideLength * sideLength
+    }
+    
+    override func simpleDescription() -> String {
+        return "A square with sides of length \(sideLength)."
+    }
+}
+let test = Square(sideLength: 5.2, name: "my test square")
+test.area()
+test.simpleDescription()
