@@ -458,3 +458,40 @@ class Square: NamedShape {
 let test = Square(sideLength: 5.2, name: "my test square")
 test.area()
 test.simpleDescription()
+
+
+// 単純に保持するプロパティ以外に、プロパティが get と set を持つこともできます
+// クラスのイニシャライザは 3 つの異なるステップがあります
+class EquilateralTriangle: NamedShape {
+    var sideLength: Double = 0.0
+    
+    init(sideLength: Double, name: String) {
+        // サブクラスで宣言されたプロパティに値を設定します
+        self.sideLength = sideLength
+        // スーパークラスのイニシャライザを呼びます
+        super.init(name: name)
+        // スーパークラスで定義されたプロパティの値を変更
+        // この時点で get や set やメソッドを使用して他のセットアップ処理を実行できます
+        numberOfSides = 3
+    }
+    
+    var perimeter: Double {
+        get {
+            return 3.0 * sideLength
+        }
+        set {
+            // 代入された新しい値はデフォルトで newValue という名前で利用できます
+            sideLength = newValue / 3.0
+        }
+    }
+    
+    override func simpleDescription() -> String {
+        return "An equilateral triangle with sides of length \(sideLength)."
+    }
+}
+var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
+print(triangle.perimeter)
+// 9.3
+triangle.perimeter = 9.9
+print(triangle.sideLength)
+// 3.3000000000000003
