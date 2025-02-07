@@ -438,6 +438,7 @@ class NamedShape {
     }
 }
 
+// ここからが最後の段落かな？
 class Square: NamedShape {
     var sideLength: Double
     
@@ -495,3 +496,48 @@ print(triangle.perimeter)
 triangle.perimeter = 9.9
 print(triangle.sideLength)
 // 3.3000000000000003
+
+
+// 2025/02/07
+// 計算する必要はないけれども、新しい値を設定する前後で何かコードを実行したい場合、
+// willSet、didSet を使います。このコードは、イニシャライザ以外で値が変更された時に毎回実行されます。
+// 例えば、下のクラスは三角形の辺の長さが常に四角形の辺の長さと同じになります。
+
+// プロパティオブザーバ (willSet) を用いて、片方のプロパティが変更される直前に、
+// もう一方のプロパティの状態も更新する仕組みを実現。
+
+// 以下のコードは、あるクラス内で三角形（EquilateralTriangle）と正方形（Square）を同じサイズで管理し、
+// どちらかのサイズが変わったらもう一方も自動的に更新されるようにする仕組みを実現しています。
+class TriangleAndSquare {
+    // EquilateralTriangleは上で定義されたclass
+    var triangle: EquilateralTriangle {
+        willSet {
+            // このsquareは何？
+            square.sideLength = newValue.sideLength
+        }
+    }
+    // こちらも上で定義したSquare class
+    var square: Square {
+        willSet {
+            // このtriangleは何？
+            triangle.sideLength = newValue.sideLength
+        }
+    }
+    // 何してる？
+    init(size: Double, name: String) {
+        square = Square(sideLength: size, name: name)
+        triangle = EquilateralTriangle(sideLength: size, name: name)
+    }
+}
+var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
+print(triangleAndSquare.square.sideLength)
+// 10.0
+print(triangleAndSquare.triangle.sideLength)
+// 10.0
+triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
+print(triangleAndSquare.triangle.sideLength)
+// 50.0
+
+// オプショナル値？
+let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
+let sideLength = optionalSquare?.sideLength
