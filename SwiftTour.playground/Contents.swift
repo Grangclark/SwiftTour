@@ -592,3 +592,30 @@ let aceRawValue = ace.rawValue
 if let convertedRank = Rank(rawValue: 3) {
     let threeDescription = convertedRank.simpleDescription()
 }
+
+
+// 2025/02/09[日]
+// 列挙型のケースの値は実在の値で、raw value を書くための別の方法ではありません。
+// 事実、意味のある raw value が存在しない場合は、raw value を提供する必要はありません。
+
+// トランプのカードにおける「スート（Suit）」を表す列挙型（enum）を定義し、各スートに対応する説明文字列を返すメソッド
+enum Suit {
+    case spades, hearts, diamonds, clubs
+    
+    func simpleDescription() -> String {
+        switch self {
+        case .spades:
+            return "spades"
+        case .hearts:
+            return "hearts"
+        case .diamonds:
+            return "diamonds"
+        case .clubs:
+            return "clubs"
+        }
+    }
+}
+// インスタンスの作成
+let hearts = Suit.hearts
+// hearts.simpleDescription() により、hearts インスタンスの説明文字列が返されます
+let heartsDescription = hearts.simpleDescription()
