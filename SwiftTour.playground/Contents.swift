@@ -619,3 +619,29 @@ enum Suit {
 let hearts = Suit.hearts
 // hearts.simpleDescription() により、hearts インスタンスの説明文字列が返されます
 let heartsDescription = hearts.simpleDescription()
+
+
+// 2025/02/10[月]
+
+// このコードは、サーバーからの応答をシミュレートするための列挙型（enum）を定義し、
+// その応答が成功か失敗かによって異なる情報を持つという仕組みを実装しています
+
+// 列挙型の定義
+enum ServerResponse {
+    case result(String, String)
+    case failure(String)
+}
+
+// インスタンスの生成
+let success = ServerResponse.result("6:00 am", "8:09 pm")
+let failure = ServerResponse.failure("Out of cheese.")
+
+// switch文によるパターンマッチング
+// ここでは、変数 success の値に基づいて処理を分岐させます
+switch success {
+case let .result(sunrise, sunset):
+    print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
+case let .failure(message):
+    print("Failure... \(message)")
+}
+// Sunrise is at 6:00 am and sunset is at 8:09 pm.
