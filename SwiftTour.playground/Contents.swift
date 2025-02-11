@@ -645,3 +645,19 @@ case let .failure(message):
     print("Failure... \(message)")
 }
 // Sunrise is at 6:00 am and sunset is at 8:09 pm.
+
+
+// 2025/02/11[火]
+// このコードは、トランプのカードを表す構造体（struct）を定義し、
+// そのカードのランクとスート（スート＝マーク）に基づいた簡単な説明文を生成する仕組みを示しています
+// カードの各情報を組み合わせた説明を簡単に得ることができるようになっています
+struct Card {
+    var rank: Rank
+    var suit: Suit
+    // このメソッドは、カードの情報（ランクとスート）に基づいた文字列を返します
+    func simpleDescription() -> String {
+        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+    }
+}
+let threeOfSpades = Card(rank: .three, suit: .spades)
+let threeOfSpadeDescription = threeOfSpades.simpleDescription()
