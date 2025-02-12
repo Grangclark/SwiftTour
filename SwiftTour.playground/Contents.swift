@@ -661,3 +661,34 @@ struct Card {
 }
 let threeOfSpades = Card(rank: .three, suit: .spades)
 let threeOfSpadeDescription = threeOfSpades.simpleDescription()
+
+
+// 2025/02/12[水]
+
+// このコードは、非同期（async/await）を使ってサーバーから情報を取得する処理の例です
+
+// サーバーが "primary" と等しい場合、ユーザーID 97 を返します。
+// それ以外の場合は、ユーザーID 501 を返します。
+
+// fetchUserID(from:) は、渡されたサーバー名に基づいてユーザーID（Int）を返す非同期関数です
+func fetchUserID(from server: String) async -> Int {
+    if server == "primary" {
+        return 97
+    }
+    return 501
+}
+
+// await fetchUserID(from: server) により、非同期にユーザーIDを取得します。
+// この呼び出しは、ユーザーIDの取得が完了するまで待機します。
+// 取得した userID が 501 なら、ユーザー名として "John Appleseed" を返します。
+// それ以外の場合は "Guest" を返します。
+
+// fetchUsername(from:) は、fetchUserID(from:) を呼び出してユーザーIDを取得し
+// その値に応じてユーザー名（String）を返す非同期関数です
+func fetchUsername(from server: String) async -> String {
+    let userID = await fetchUserID(from: server)
+    if userID == 501 {
+        return "John Appleseed"
+    }
+    return "Guest"
+}
