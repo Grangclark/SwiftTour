@@ -692,3 +692,26 @@ func fetchUsername(from server: String) async -> String {
     }
     return "Guest"
 }
+
+
+// 非同期関数の呼び出しに async let を使うことで、
+// 他の非同期関数と並列に実行することができます。戻り値を使う箇所には await を書きます。
+
+// このコードは、Swiftの非同期処理と並列処理の仕組みを利用して、
+// サーバーからユーザー情報を同時に取得し、その結果を使って挨拶文を作成している例です
+// この関数は async として定義されているので、内部で非同期処理が使えます
+func connectUser(to server: String) async {
+    async let userID = fetchUserID(from: server)
+    async let username = fetchUsername(from: server)
+    // await を使って結果を待つ
+    let greeting = await "Hello \(username), user ID \(userID)"
+    print(greeting)
+}
+
+// 同期的なコードから非同期関数を呼び出す場合は Task を使います
+// Task は非同期関数の終了を待ちません
+// Task { ... } を使うことで、同期コード内でも非同期処理を開始できます
+Task {
+    await connectUser(to: "primary")
+}
+// Hello Guest, user ID 97
