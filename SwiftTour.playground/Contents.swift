@@ -715,3 +715,69 @@ Task {
     await connectUser(to: "primary")
 }
 // Hello Guest, user ID 97
+
+
+// 2025/02/14[金]
+// 並列コードを構造化するために、タスクグループ(task group)を使います
+
+// コードは Swift の非同期処理機能（Swift Concurrency）のひとつである
+// withTaskGroup を使って、複数のサーバーから非同期に
+// ユーザーID（Int 型）を取得し、その結果を配列にまとめる例です
+
+// withTaskGroup を使うことで、複数の非同期タスクを並列に実行できます
+// この方法により、並列処理による高速な非同期処理が実現できます
+
+/* 
+let userIDs = await withTaskGroup(of: Int.self) { group in
+    for server in ["primary", "secondary", "development"] {
+        group.addTask {
+            return await fetchUserID(from: server)
+        }
+    }
+    
+    var results: [Int] = []
+
+    // 各タスクは各サーバーからユーザーIDを取得し、
+    // 結果は for await ループで収集され、配列にまとめられます
+    for await result in group {
+        results.append(result)
+    }
+    return results
+}
+
+// アクターははクラスと似ていますが、
+// 異なる非同期関数が同時に同じアクターのインスタンスに安全にアクセスできる点が異なります
+
+// このコードは Swift の actor を使ったサンプルで、
+// 非同期処理やデータ競合を防ぐための仕組みを提供しています
+
+// actor は並列処理におけるデータ競合を防ぐために、
+// 内部状態へのアクセスをシリアル化（逐次実行）する特殊な型です。
+// ここでは、サーバーへの接続やユーザー情報の管理を担当する
+// ServerConnection actor を定義しています
+
+// ここはコメントアウトするしかなさそう・・・
+actor ServerConnection {
+    // サーバーの名前を保持するプロパティです。デフォルトは "primary" に設定されています
+    var server: String = "primary"
+    
+    // 接続中のユーザーIDを格納するプライベートな配列です。
+    // actor の内部状態として管理され、外部から直接アクセスできないようにしています
+    private var activeUsers: [Int] = []
+    
+    // このメソッドは非同期メソッドであり、await を用いて非同期処理を行います
+    func connect() async -> Int {
+        // 外部関数 fetchUserID(from:) を非同期で呼び出し、
+        // 指定されたサーバー（ここでは server プロパティの値）からユーザーIDを取得します
+        let userID = await fetchUserID(from: server)
+        
+        // ... communicate with server ...
+        // 取得したユーザーIDを actor 内の activeUsers 配列に追加します
+        activeUsers.append(userID)
+        return userID
+    }
+}
+
+let server = ServerConnection()
+let userID = await server.connect()
+*/
