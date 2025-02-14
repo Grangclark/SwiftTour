@@ -781,3 +781,40 @@ actor ServerConnection {
 let server = ServerConnection()
 let userID = await server.connect()
 */
+
+
+// プロトコルと拡張（Protocols and Extensions）
+// プロトコルは、クラス、構造体、列挙型が実装すべき「契約」や「仕様」を定義します
+
+// ExampleProtocol は、simpleDescription プロパティと adjust() メソッドを定義する契約です
+protocol ExampleProtocol {
+    var simpleDescription: String { get }
+    // このメソッドは、実装する型の状態（プロパティ）を変更する可能性があることを示しています
+    // 特に構造体や列挙型の場合、値型のプロパティを変更するためにmutatingが必要になります
+    mutating func adjust()
+}
+
+// クラス、列挙型、構造体は全てプロトコルに準拠することができます
+
+// クラスによるプロトコルの準拠
+class SimpleClass: ExampleProtocol {
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69105
+    func adjust() {
+        simpleDescription += " Now 100% adjusted."
+    }
+}
+var a = SimpleClass()
+a.adjust()
+let aDescription = a.simpleDescription
+
+// 構造体によるプロトコルの準拠
+struct SimpleStructure: ExampleProtocol {
+    var simpleDescription: String = "A simple structure"
+    mutating func adjust() {
+        simpleDescription += " (adjusted)"
+    }
+}
+var b = SimpleStructure()
+b.adjust()
+let bDescription = b.simpleDescription
