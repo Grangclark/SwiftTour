@@ -818,3 +818,36 @@ struct SimpleStructure: ExampleProtocol {
 var b = SimpleStructure()
 b.adjust()
 let bDescription = b.simpleDescription
+
+
+
+// 2025/02/16[日]
+// 新しい機能(メソッドや計算プロパティ)を追加する場合に、
+// extensionを使います。他のファイルやモジュールで宣言された型や、
+// ライブラリやフレームワークからインポートした型にプロトコルを準拠させる場合にも extension を使います
+
+// Swiftの拡張（extension）機能を使って、Int型に ExampleProtocol プロトコルの実装を追加しています。
+// 具体的には、Intが自分自身を「説明」できるようにし、また調整する（adjust）機能を持たせています
+
+// Int型に対して、ExampleProtocol の要件（プロパティとメソッド）を実装することを宣言しています
+extension Int: ExampleProtocol {
+    var simpleDescription: String {
+        return "The number \(self)"
+    }
+    // 42は任意に選ばれた数値で、特に深い意味はなく、プロトコルに準拠した例として使われている（らしい）
+    mutating func adjust() {
+        self += 42
+    }
+}
+print(7.simpleDescription)
+// The number 7
+
+// プロトコルを型として扱う「存在型」（existential type）の例です
+// 「プロトコルを型として使い、ExampleProtocol に準拠するオブジェクトから
+// 共通のプロパティにアクセスする」という仕組みを示しています
+let protocolValue: any ExampleProtocol = a
+// protocolValue を使って、プロトコルで要求されている
+// simpleDescription プロパティにアクセスし、その値を出力しています
+print(protocolValue.simpleDescription)
+// A very simple class. Now 100% adjusted. が出力されます
+// print(protocolValue.anotherProperty) // エラーを確認したい場合はコメントアウトを外しましょう
