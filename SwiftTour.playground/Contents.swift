@@ -851,3 +851,38 @@ let protocolValue: any ExampleProtocol = a
 print(protocolValue.simpleDescription)
 // A very simple class. Now 100% adjusted. が出力されます
 // print(protocolValue.anotherProperty) // エラーを確認したい場合はコメントアウトを外しましょう
+
+
+
+// 2025/02/17[月]
+// エラーハンドリング(Error Handling)
+// Errorプロトコルに準拠することで、任意の型でエラーを表現することができます
+
+// 印刷機に関するエラーを表現するための型を定義しています
+// outOfPaper: 用紙切れのエラー
+// noToner: トナー切れのエラー
+// onFire: 印刷機が火事状態になっているというユーモラスなエラー
+enum PrinterError: Error {
+    case outOfPaper
+    case noToner
+    case onFire
+}
+
+// 関数にthrows を付け、エラーをスローする箇所に
+// throw を使用することでエラーをスローすることができます。
+// 関数内でエラーをスローすると、関数がすぐにリターンして、
+// その関数を呼び出したコードでエラーを処理します
+
+// エラーをスローする関数の定義
+// 関数宣言の後ろに throws を付けることで、
+// この関数は実行中にエラーをスロー（throw）する可能性があることを示します
+// job: Int: 印刷ジョブの識別子や番号を表す整数
+// toPrinter printerName: String: 印刷機の名前（文字列）を指定
+func send(job: Int, toPrinter printerName: String) throws -> String {
+    if printerName == "Never Has Toner" {
+        // エラーがスローされると関数は即座に終了し、呼び出し側でエラーをキャッチして処理する必要があります
+        throw PrinterError.noToner
+    }
+    // 上記の条件に当てはまらない場合は、"Job sent" という文字列を返します
+    return "Job sent"
+}
