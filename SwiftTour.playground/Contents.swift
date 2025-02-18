@@ -886,3 +886,34 @@ func send(job: Int, toPrinter printerName: String) throws -> String {
     // 上記の条件に当てはまらない場合は、"Job sent" という文字列を返します
     return "Job sent"
 }
+
+
+// 2025/02/18[火]
+// 処理する方法は様々あります。1 つは do-catch を使用することです。
+// do ブロックの中では、エラーをスローする可能性がある箇所の前に try を付けます
+
+// このコードは、エラーハンドリングの仕組みを使って、エラーが発生する可能性のある関数を呼び出し、
+// その結果を処理する方法を示しています
+do {
+    // エラーが発生する可能性のある処理を記述します
+    let printerResponse = try send(job: 1040, toPrinter: "Bi sheng")
+    print(printerResponse)
+} catch {
+    // エラーが発生した場合、catch ブロックが実行され、エラー内容が出力されます
+    print(error)
+}
+// Job sent
+
+// エラーを処理するために、複数の catch ブロックを書くこともできます。
+// switch 文の case のように catch の後ろにパターンを書きます
+do {
+    let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
+    print(printerResponse)
+} catch PrinterError.onFire {
+    print("I'll just put this over here, with the rest of the fire.")
+} catch let printerError as PrinterError {
+    print("Printer error: \(printerError).")
+} catch {
+    print(error)
+}
+// Job sent
