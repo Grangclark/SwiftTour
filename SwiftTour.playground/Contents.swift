@@ -917,3 +917,46 @@ do {
     print(error)
 }
 // Job sent
+
+
+// 2025/02/19[水]
+// 処理するもう 1 つの方法は、try? を付けて結果をオプショナルに変換することです。
+// もしその関数がエラーをスローする場合、特定のエラーは破棄されて、結果が nil になります。
+// そうでなければ、結果は、関数が返す値を内包したオプショナル値になります
+let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
+let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
+
+// 全ての処理の実行後、関数が結果を返す直前にコードを実行したい場合、defer を使います。
+// このブロックは関数がエラーをスローしても実行されます。
+// 違うタイミングで実行される必要はありますが、
+// defer を使用してセットアップ用のコードの次にクリーンアップ用のコードを書くことができます
+
+// このコードは、冷蔵庫の状態（開いているかどうか）を管理しながら、
+// 指定された食べ物が冷蔵庫にあるかをチェックする関数を示しています。
+// また、defer キーワードを使って、関数の終了時に必ず実行される処理を定義している点がポイントです
+
+// fridgeIsOpen
+// 冷蔵庫が開いているかどうかを示すブール値。初期状態は false（閉まっている）
+// fridgeContent
+// 冷蔵庫の中にある食品のリスト
+var fridgeIsOpen = false
+let fridgeContent = ["milk", "eggs", "leftovers"]
+
+// 指定された食べ物が冷蔵庫にあるか（fridgeContent に含まれているか）を調べ、その結果を返します
+func fridgeContains(_ food: String) -> Bool {
+    fridgeIsOpen = true
+    defer {
+        // 関数の実行が終了する直前に必ず実行されるコードブロックです
+        fridgeIsOpen = false
+    }
+    
+    let result = fridgeContent.contains(food)
+    return result
+}
+if fridgeContains("banana") {
+    print("Found a banana")
+}
+// このように、defer を使うことで、
+// 例え途中でエラーや早期リターンが発生しても、必ず後始末が行われることが保証されます
+print(fridgeIsOpen)
+// false
