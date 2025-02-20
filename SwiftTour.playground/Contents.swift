@@ -960,3 +960,35 @@ if fridgeContains("banana") {
 // 例え途中でエラーや早期リターンが発生しても、必ず後始末が行われることが保証されます
 print(fridgeIsOpen)
 // false
+
+
+// 2025/02/20[木]
+
+// ジェネリクス(Generics)
+// ジェネリックな関数や型を作成するには、山括弧(<>)の中に名前を書きます
+// ジェネリック: 型に依存せず、どんな型の要素でも扱える関数として定義されている
+
+// Swiftにおける「ジェネリクス」とは、**「どんな型でも使える柔軟なコードを書くための仕組み」**のことです
+func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
+    // 空の配列 result を作成します。ここに item を繰り返し追加していきます
+    var result = [Item]()
+    for _ in 0..<numberOfTimes {
+        // 指定された回数だけ item を配列 result に追加します
+        result.append(item)
+    }
+    return result
+}
+makeArray(repeating: "knock", numberOfTimes: 4)
+
+// Swift 標準ライブラリのオプショナル型の再実装
+// このコードは、Swiftの組み込み型であるOptionalに似た、独自のジェネリックな列挙型を定義しています
+// OptinalValue<Wrapped> は、Wrapped という型パラメータを持つジェネリックな列挙型です
+// これは、任意の型の値を「包む」ためのテンプレートのようなもので、
+// 実際に使う際に具体的な型（例えばIntやStringなど）を指定できます
+enum OptinalValue<Wrapped> {
+    case none
+    case some(Wrapped)
+}
+// 最初は .none を代入しており、これは「値が存在しない」状態を意味します
+var possibleInteger: OptinalValue<Int> = .none
+possibleInteger = .some(100)
