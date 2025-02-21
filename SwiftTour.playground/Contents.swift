@@ -992,3 +992,31 @@ enum OptinalValue<Wrapped> {
 // 最初は .none を代入しており、これは「値が存在しない」状態を意味します
 var possibleInteger: OptinalValue<Int> = .none
 possibleInteger = .some(100)
+
+
+// 2025/02/21[金]
+// 一覧を指定するために、本文の直前に where を使います。
+// 例えば、プロトコルを実装するために型が必要な場合や、
+// 2 つの型が一致している必要がある場合、
+// クラスが特定のスーパークラスを継承している必要がある場合などに使います
+
+// このコードは、２つのシーケンス（配列やリストなど）に共通する要素が存在するかどうかを判定する、
+// ジェネリックな関数です
+// T や U は、ジェネリック関数で使う「型パラメータ」の名前で、
+// 特定の型に縛られず、任意の型を扱えるようにするための記号です
+// lhs は "left-hand side"（左側）の略、
+// rhs は "right-hand side"（右側）の略です
+func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
+    where T.Element: Equatable, T.Element == U.Element
+{
+    for lhsItem in lhs {
+        for rhsItem in rhs {
+            if lhsItem == rhsItem {
+                return true
+            }
+        }
+    }
+    return false
+}
+anyCommonElements([1, 2, 3], [3])
+// これにてSwiftTour完了
